@@ -8,15 +8,15 @@ describe("ArrayLibrary tests", function() {
     });
 
     describe("Method take tests", function() {
-        it("returns {1,2} on ({1,2,3,4}, 2)", function(){
+        it("returns {1,2} on ({1,2,3,4..}, 2)", function(){
             expect(arrayLibrary.take(testArray,2)).toEqual([1,2]);
         });
 
-        it("returns {1,2,3,4} on ({1,2,3,4}, 4)", function() {
+        it("returns {1,2,3,4} on ({1,2,3,4..}, 4)", function() {
             expect(arrayLibrary.take(testArray,4)).toEqual([1,2,3,4]);
         });
 
-        it("returns {1,2,3,4} on ({1,2,3,4}, n > length)", function() {
+        it("returns {1,2,3,4} on ({1,2,3,4..}, n > length)", function() {
             expect(arrayLibrary.take(testArray,10)).toEqual(testArray);
         });
 
@@ -30,15 +30,27 @@ describe("ArrayLibrary tests", function() {
             expect(arrayLibrary.skip(testArray,6)).toEqual([7,8]);
         });
 
+        it("returns {4,5,6,7,8} on (testArray,3)", function() {
+            expect(arrayLibrary.skip(testArray,3)).toEqual([4,5,6,7,8]);
+        });
+
+        it("returns {8} on (testArray,7)", function() {
+            expect(arrayLibrary.skip(testArray,7)).toEqual([8]);
+        });
+
         it("goes round on n >= testArray.length", function() {
-            expect(arrayLibrary.skip(testArray,10)).toEqual([3,4,5,6,7,8]);
+            expect(arrayLibrary.skip(testArray,10)).toEqual([]);
         });
 
         it("returns {2,3,4,5,6,7,8} on (testArray,1)", function() {
             expect(arrayLibrary.skip(testArray,1)).toEqual([2,3,4,5,6,7,8]);
         });
 
-        it("returns testArray on n <= 0", function() {
+        it("returns skip(length-n) on n < 0", function() {
+            expect(arrayLibrary.skip(testArray,-2)).toEqual([7,8]);
+        });
+
+        it("returns same values array on n = 0", function() {
             expect(arrayLibrary.skip(testArray,0)).toEqual(testArray);
         });
     });
