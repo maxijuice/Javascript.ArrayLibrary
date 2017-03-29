@@ -184,4 +184,50 @@ describe("ArrayLibrary tests", function() {
             expect(actualArr).toEqual([1,2,3]);
         });
     });
+
+    describe("Method chain tests", function() {
+        it("works on single function take", function() {
+            expect(arrayLibrary.chain(testArray).take(5).value()).toEqual(arrayLibrary.take(testArray,5));
+        });
+
+        it("works on single function skip", function() {
+            expect(arrayLibrary.chain(testArray).skip(5).value()).toEqual(arrayLibrary.skip(testArray,5));
+        });
+
+        it("works on single function reduce", function() {
+            expect(arrayLibrary.chain(testArray).reduce(function(a, b){ return a + b; }).value())
+                .toEqual(arrayLibrary.reduce(testArray,function(a, b){ return a + b; }));
+        });
+
+        it("works on single function map", function() {
+            expect(arrayLibrary.chain(testArray).map(function(x) { return x * x; }).value())
+                .toEqual(arrayLibrary.map(testArray, function(x) { return x * x; }));
+        });
+
+        it("works on single function foreach", function() {
+            var actual = "", list = ["Hi", "Goodbye", "Не скучай"];
+            var func = function(item, i, arr) {
+                actual += i + ": " + item + " (array: " + arr + " )\n";
+            };
+
+            expect(arrayLibrary.foreach(list, func))
+                .toEqual(arrayLibrary.chain(list).foreach(func).value());
+        });
+
+        it("works on single function filter", function() {
+            var func = function(number) {
+                return number - 5 > 0;
+            };
+
+            expect(arrayLibrary.chain(testArray).filter(func).value())
+                .toEqual(arrayLibrary.filter(testArray, func));
+        });
+
+        it("works on multiple functions", function() {
+            expect(arrayLibrary.chain(testArray).skip(3).take(2).value()).
+            toEqual(arrayLibrary.take(arrayLibrary.skip(testArray,3),2));
+        });
+
+
+    });
 });
