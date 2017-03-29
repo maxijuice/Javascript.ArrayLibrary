@@ -228,6 +228,13 @@ describe("ArrayLibrary tests", function() {
             toEqual(arrayLibrary.take(arrayLibrary.skip(testArray,3),2));
         });
 
+        it("works if transitioned", function() {
+            var test = arrayLibrary.chain(testArray);
+            var test2 = test.take(2).value();
+            var test3 = test.take(3).value();
 
+            expect(arrayLibrary.take(testArray, 2)).toEqual(test2);
+            expect(arrayLibrary.take(testArray, 3)).toEqual(test3);
+        });
     });
 });
