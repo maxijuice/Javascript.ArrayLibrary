@@ -223,6 +223,16 @@ describe("ArrayLibrary tests", function() {
             toEqual(arrayLibrary.take(arrayLibrary.skip(testArray,3),2));
         });
 
+        it("works on multiple functions (3)", function() {
+            expect(arrayLibrary.chain(testArray).skip(3).take(2).skip(1).value()).
+            toEqual(arrayLibrary.skip(arrayLibrary.take(arrayLibrary.skip(testArray,3),2), 1));
+        });
+
+        it("works on multiple functions (4)", function() {
+            expect(arrayLibrary.chain(testArray).skip(3).take(4).skip(1).take(2).value()).
+            toEqual([5,6]);
+        });
+
         it("works if transitioned", function() {
             var test = arrayLibrary.chain(testArray);
             var test2 = test.take(2).value();
