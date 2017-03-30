@@ -194,11 +194,6 @@ describe("ArrayLibrary tests", function() {
             expect(arrayLibrary.chain(testArray).skip(5).value()).toEqual(arrayLibrary.skip(testArray,5));
         });
 
-        it("works on single function reduce", function() {
-            expect(arrayLibrary.chain(testArray).reduce(function(a, b){ return a + b; }).value())
-                .toEqual(arrayLibrary.reduce(testArray,function(a, b){ return a + b; }));
-        });
-
         it("works on single function map", function() {
             expect(arrayLibrary.chain(testArray).map(function(x) { return x * x; }).value())
                 .toEqual(arrayLibrary.map(testArray, function(x) { return x * x; }));
@@ -235,6 +230,54 @@ describe("ArrayLibrary tests", function() {
 
             expect(arrayLibrary.take(testArray, 2)).toEqual(test2);
             expect(arrayLibrary.take(testArray, 3)).toEqual(test3);
+        });
+    });
+
+    describe("Method chain tests for arrlibPRO", function() {
+        it("works on single function take", function() {
+            expect(arrayLibraryPro.chain(testArray).take(5).value()).toEqual(arrayLibraryPro.take(testArray,5));
+        });
+
+        it("works on single function skip", function() {
+            expect(arrayLibraryPro.chain(testArray).skip(5).value()).toEqual(arrayLibraryPro.skip(testArray,5));
+        });
+
+        it("works on single function map", function() {
+            expect(arrayLibraryPro.chain(testArray).map(function(x) { return x * x; }).value())
+                .toEqual(arrayLibraryPro.map(testArray, function(x) { return x * x; }));
+        });
+
+        it("works on single function foreach", function() {
+            var actual = "", list = ["Hi", "Goodbye", "Не скучай"];
+            var func = function(item, i, arr) {
+                actual += i + ": " + item + " (array: " + arr + " )\n";
+            };
+
+            expect(arrayLibraryPro.foreach(list, func))
+                .toEqual(arrayLibraryPro.chain(list).foreach(func).value());
+        });
+
+        it("works on single function filter", function() {
+            var func = function(number) {
+                return number - 5 > 0;
+            };
+
+            expect(arrayLibraryPro.chain(testArray).filter(func).value())
+                .toEqual(arrayLibraryPro.filter(testArray, func));
+        });
+
+        it("works on multiple functions", function() {
+            expect(arrayLibraryPro.chain(testArray).skip(3).take(2).value()).
+            toEqual(arrayLibraryPro.take(arrayLibrary.skip(testArray,3),2));
+        });
+
+        it("works if transitioned", function() {
+            var test = arrayLibraryPro.chain(testArray);
+            var test2 = test.take(2).value();
+            var test3 = test.take(3).value();
+
+            expect(arrayLibraryPro.take(testArray, 2)).toEqual(test2);
+            expect(arrayLibraryPro.take(testArray, 3)).toEqual(test3);
         });
     });
 });
