@@ -241,5 +241,15 @@ describe("ArrayLibrary tests", function() {
             expect(arrayLibrary.take(testArray, 2)).toEqual(test2);
             expect(arrayLibrary.take(testArray, 3)).toEqual(test3);
         });
+
+        it("works with foreach", function() {
+            var value = 2;
+            var double = function (item) {
+                value = value*item;
+            }
+
+            arrayLibrary.chain(testArray).skip(3).take(2).foreach(double);
+            expect(value).toEqual(40);
+        });
     });
 });
