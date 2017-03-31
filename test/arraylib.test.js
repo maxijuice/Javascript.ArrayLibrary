@@ -254,10 +254,6 @@ describe("ArrayLibrary tests", function() {
     });
 
     describe("method sum test", function() {
-        it("works if only start mentioned", function() {
-           expect(arrayLibrary.sum(testArray, 4)).toEqual(26);
-        });
-
         it("works if two argument mentioned", function() {
             expect(arrayLibrary.sum(testArray, 4, 7)).toEqual(26);
         });
