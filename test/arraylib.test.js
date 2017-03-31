@@ -252,4 +252,19 @@ describe("ArrayLibrary tests", function() {
             expect(value).toEqual(40);
         });
     });
+
+    describe("method sum test", function() {
+        it("works if only start mentioned", function() {
+           expect(arrayLibrary.sum(testArray, 4)).toEqual(26);
+        });
+
+        it("works if two argument mentioned", function() {
+            expect(arrayLibrary.sum(testArray, 4, 7)).toEqual(26);
+        });
+
+        it("works if called with same args on different arrays", function() {
+            expect(arrayLibrary.sum(testArray, 1, 2))
+                .not.toEqual(arrayLibrary.sum([1,2,2,2,4,5,6,7], 1, 2));
+        });
+    })
 });
